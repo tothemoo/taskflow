@@ -3,6 +3,7 @@ import {useState} from 'react'
 import api from '../services/api'
 import {useNavigate} from 'react-router-dom'
 import {useAuth} from '../context/AuthContext'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -68,6 +69,10 @@ const Login = () => {
             <button type="submit" className="btn btn-primary w-100" disabled={loading}>
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
+
+            <p className='text-center mt-3'>
+              Dont have an account?{" "} <Link to="/register">Register here</Link>
+            </p>
           </form>
         </div>
       </div>

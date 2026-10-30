@@ -1,11 +1,13 @@
 import {BrowserRouter as Router, Routes, Route, Navigate, BrowserRouter, useNavigate} from 'react-router-dom'
-import Login from './pages/Login'
-import ProtectedRoute from './components/ProtectedRoute'
-import {AuthProvider, useAuth} from './context/AuthContext'
+import {useAuth} from './context/AuthContext'
+import AuthProvider from './context/AuthContext'
 
 
 import {useState,useEffect} from 'react'
 import api from './services/api'
+import ProtectedRoute from './components/ProtectedRoute'
+import Login from './pages/Login'
+import Register from './pages/Register'
 
 
 function Dashboard() {
@@ -68,6 +70,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/Login" replace />} />
           <Route path="/Login" element={<Login/>} />
+          <Route path='/Register' element={<Register/>}/>
           <Route element={<ProtectedRoute/>}>
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>         
