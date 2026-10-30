@@ -1,7 +1,7 @@
 import {BrowserRouter as Router, Routes, Route, Navigate, BrowserRouter, useNavigate} from 'react-router-dom'
 import Login from './pages/Login'
 import ProtectedRoute from './components/ProtectedRoute'
-
+import {AuthProvider, useAuth} from './context/AuthContext'
 
 
 import {useState,useEffect} from 'react'
@@ -13,10 +13,10 @@ function Dashboard() {
   const[profile,setProfile]=useState(null);
   const[error,setError]=useState(null);
   const navigate = useNavigate();
+  const {user,logout}=useAuth();
 
   const handleLogout=()=>{
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    logout();
     navigate("/Login",{replace:true})
   }
 
@@ -64,14 +64,15 @@ function App() {
   
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/Login" replace />} />
-        <Route path="/Login" element={<Login/>} />
-        <Route element={<ProtectedRoute/>}>
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Route>
-        
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Navigate to="/Login" replace />} />
+          <Route path="/Login" element={<Login/>} />
+          <Route element={<ProtectedRoute/>}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>         
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }

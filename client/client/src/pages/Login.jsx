@@ -2,6 +2,7 @@ import React from 'react'
 import {useState} from 'react'
 import api from '../services/api'
 import {useNavigate} from 'react-router-dom'
+import {useAuth} from '../context/AuthContext'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,6 +10,8 @@ const Login = () => {
   const [password, setPassword]=useState('')
   const [error, setError]=useState('')
   const [loading,setLoading]=useState(false)
+
+  const {login} = useAuth();
 
   const handleSubmit= async(e)=>{
     e.preventDefault()
@@ -23,8 +26,7 @@ const Login = () => {
         }
       );
       const {token, user}=response.data;
-      localStorage.setItem("token",token);
-      localStorage.setItem("user",JSON.stringify(user));
+      login(token,user)
 
       navigate("/dashboard");
     }
