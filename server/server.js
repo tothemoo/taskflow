@@ -4,8 +4,19 @@ require('dotenv').config();
 const app = require('./app');
 const sequelize = require('./config/db')
 const User=require('./models/User');
+const Project = require('./models/Project')
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
+
+User.hasMany(Project,{
+    foreignKey:"userId",
+    as:"projects"
+});
+
+Project.belongsTo(User,{
+    foreignKey:"userId",
+    as:"creator"
+})
 
 sequelize.sync()
     .then(()=>{
