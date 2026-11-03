@@ -8,6 +8,7 @@ import api from './services/api'
 import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Projects from "./pages/Projects"
 
 
 function Dashboard() {
@@ -73,6 +74,7 @@ function App() {
           <Route path='/Register' element={<Register/>}/>
           <Route element={<ProtectedRoute/>}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path='/projects' element={<Projects/>}/>
           </Route>         
         </Routes>
       </AuthProvider>
