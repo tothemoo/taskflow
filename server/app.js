@@ -7,6 +7,7 @@ const authRoutes=require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes')
 const adminRoutes = require('./routes/adminRoutes')
 const projectRoutes= require('./routes/projectRoutes')
+const projectMemberRoutes = require("./routes/projectMemberRoutes");
 
 app.use(cors({
      origin: "http://localhost:5173"
@@ -23,6 +24,7 @@ app.use('/api/auth',authRoutes);
 app.use('/api/profile',profileRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api/projects', projectRoutes);
+app.use("/api/projects", projectMemberRoutes);
 
 
 module.exports = app;
