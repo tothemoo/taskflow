@@ -1,4 +1,5 @@
 const Project = require('../models/Project')
+const {redisClient} = require('../config/redis')
 
 const createProject = async (req, res)=>{
     try{
@@ -16,6 +17,8 @@ const createProject = async (req, res)=>{
             description,
             userId:req.user.id
         })
+
+        await redisClient.del(`projects:user:${req.user.id}`)
 
         res.status(201).json({
             success: true,
@@ -35,12 +38,35 @@ const createProject = async (req, res)=>{
 
 const getProjects = async(req,res)=>{
     try{
+
+        const cachedKey = `projects:user:${req.user.id}`
+
+        const cachedProjects = await redisClient.get(cachedKey)
+
+        if(cachedProjects){
+            console.log("Projects fetced from redis");
+
+            return res.status(200).json({
+                success:true,
+                source:"redis",
+                projects:JSON.parse(cachedProjects)
+            })
+        }
+
+        console.log("Projects fetched from MySQL");
+
         const projects = await Project.findAll({
             where:{
                 userId: req.user.id
             },
             order:[["createdAt","DESC"]]
         })
+
+        await redisClient.setEx(
+            cachedKey,
+            60,
+            JSON.stringify(projects)
+        )
 
         res.status(200).json({
             success:true,
@@ -114,6 +140,8 @@ const updateProject = async(req,res)=>{
             status:status!==undefined?status:project.status
         })
 
+        await redisClient.del(`projects:user:${req.user.id}`)
+
         res.status(200).json({
             success:true,
             message:"Project updated successfully",
@@ -148,6 +176,8 @@ const deleteProject = async(req,res)=>{
         }
 
         await project.destroy();
+
+        await redisClient.del(`projects:user:${req.user.id}`)
 
         res.status(200).json({
             success:true,
