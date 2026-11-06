@@ -36,54 +36,71 @@ const createProject = async (req, res)=>{
     }
 }
 
-const getProjects = async(req,res)=>{
-    try{
 
-        const cachedKey = `projects:user:${req.user.id}`
+const getProjects = async (req, res) => {
+    const cacheKey = `projects:user:${req.user.id}`;
 
-        const cachedProjects = await redisClient.get(cachedKey)
+    try {
+        // 1. Try retrieving projects from Redis
+        if (redisClient.isReady) {
+            try {
+                const cachedProjects = await redisClient.get(cacheKey);
 
-        if(cachedProjects){
-            console.log("Projects fetced from redis");
+                if (cachedProjects) {
+                    console.log("Projects fetched from Redis");
 
-            return res.status(200).json({
-                success:true,
-                source:"redis",
-                projects:JSON.parse(cachedProjects)
-            })
+                    return res.status(200).json({
+                        success: true,
+                        source: "redis",
+                        projects: JSON.parse(cachedProjects)
+                    });
+                }
+            } catch (redisError) {
+                console.error("Redis read failed:", redisError.message);
+            }
         }
 
+        // 2. Fetch projects from MySQL
         console.log("Projects fetched from MySQL");
 
         const projects = await Project.findAll({
-            where:{
+            where: {
                 userId: req.user.id
             },
-            order:[["createdAt","DESC"]]
-        })
+            order: [["createdAt", "DESC"]]
+        });
 
-        await redisClient.setEx(
-            cachedKey,
-            60,
-            JSON.stringify(projects)
-        )
+        // 3. Try saving projects in Redis
+        if (redisClient.isReady) {
+            try {
+                await redisClient.setEx(
+                    cacheKey,
+                    60,
+                    JSON.stringify(projects)
+                );
+            } catch (redisError) {
+                console.error("Redis cache save failed:", redisError.message);
+            }
+        }
 
-        res.status(200).json({
-            success:true,
-            count:projects.length,
+        // 4. Return projects regardless of Redis availability
+        return res.status(200).json({
+            success: true,
+            source: "mysql",
+            count: projects.length,
             projects
-        })
-    }
+        });
 
-    catch(error){
-        console.error(error);
+    } catch (error) {
+        console.error("Get projects error:", error);
 
-        res.status(500).json({
-            success:false,
-            message:"Unable to fetch projects"
-        })
+        return res.status(500).json({
+            success: false,
+            message: "Unable to fetch projects"
+        });
     }
-}
+};
+
 
 const getProjectById = async(req,res)=>{
     try{

@@ -1,13 +1,10 @@
 
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import "../projects.css";
 
 const Projects = () => {
-
-    // ==============================
     // PROJECT STATES
-    // ==============================
-
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -18,11 +15,7 @@ const Projects = () => {
     const [creating, setCreating] = useState(false);
     const [editingId, setEditingId] = useState(null);
 
-
-    // ==============================
     // PROJECT MEMBER STATES
-    // ==============================
-
     const [selectedProject, setSelectedProject] = useState(null);
     const [members, setMembers] = useState([]);
     const [membersLoading, setMembersLoading] = useState(false);
@@ -33,18 +26,13 @@ const Projects = () => {
     const [addingMember, setAddingMember] = useState(false);
     const [removingMemberId, setRemovingMemberId] = useState(null);
 
-
-    // ==============================
     // FETCH PROJECTS
-    // ==============================
-
     const fetchProjects = async () => {
         try {
             const response = await api.get("/projects");
 
             setProjects(response.data.projects || []);
             setError("");
-
         } catch (error) {
             setError(
                 error.response?.data?.message ||
@@ -59,11 +47,7 @@ const Projects = () => {
         fetchProjects();
     }, []);
 
-
-    // ==============================
     // CREATE PROJECT
-    // ==============================
-
     const handleCreateProject = async (e) => {
         e.preventDefault();
 
@@ -91,7 +75,6 @@ const Projects = () => {
             setDescription("");
 
             await fetchProjects();
-
         } catch (error) {
             setError(
                 error.response?.data?.message ||
@@ -102,11 +85,7 @@ const Projects = () => {
         }
     };
 
-
-    // ==============================
     // EDIT PROJECT
-    // ==============================
-
     const handleEditProject = (project) => {
         setEditingId(project.id);
         setName(project.name);
@@ -116,11 +95,7 @@ const Projects = () => {
         setSuccess("");
     };
 
-
-    // ==============================
     // UPDATE PROJECT
-    // ==============================
-
     const handleUpdateProject = async (e) => {
         e.preventDefault();
 
@@ -149,7 +124,6 @@ const Projects = () => {
             setDescription("");
 
             await fetchProjects();
-
         } catch (error) {
             setError(
                 error.response?.data?.message ||
@@ -160,11 +134,7 @@ const Projects = () => {
         }
     };
 
-
-    // ==============================
     // CANCEL EDITING
-    // ==============================
-
     const handleCancelEdit = () => {
         setEditingId(null);
         setName("");
@@ -172,13 +142,8 @@ const Projects = () => {
         setError("");
     };
 
-
-    // ==============================
     // DELETE PROJECT
-    // ==============================
-
     const handleDeleteProject = async (id) => {
-
         const confirmDelete = window.confirm(
             "Are you sure you want to delete this project?"
         );
@@ -200,7 +165,6 @@ const Projects = () => {
             }
 
             await fetchProjects();
-
         } catch (error) {
             setError(
                 error.response?.data?.message ||
@@ -209,13 +173,8 @@ const Projects = () => {
         }
     };
 
-
-    // ==============================
     // FETCH PROJECT MEMBERS
-    // ==============================
-
     const fetchMembers = async (project) => {
-
         try {
             setMembersLoading(true);
             setMemberError("");
@@ -229,7 +188,6 @@ const Projects = () => {
             );
 
             setMembers(response.data.members || []);
-
         } catch (error) {
             setMemberError(
                 error.response?.data?.message ||
@@ -240,11 +198,7 @@ const Projects = () => {
         }
     };
 
-
-    // ==============================
     // ADD PROJECT MEMBER
-    // ==============================
-
     const handleAddMember = async (e) => {
         e.preventDefault();
 
@@ -272,13 +226,11 @@ const Projects = () => {
 
             setMemberEmail("");
 
-            // Refresh the members list
             const membersResponse = await api.get(
                 `/projects/${selectedProject.id}/members`
             );
 
             setMembers(membersResponse.data.members || []);
-
         } catch (error) {
             setMemberError(
                 error.response?.data?.message ||
@@ -289,13 +241,8 @@ const Projects = () => {
         }
     };
 
-
-    // ==============================
     // REMOVE PROJECT MEMBER
-    // ==============================
-
     const handleRemoveMember = async (userId) => {
-
         const confirmRemove = window.confirm(
             "Are you sure you want to remove this member?"
         );
@@ -316,13 +263,11 @@ const Projects = () => {
                 response.data.message || "Member removed successfully."
             );
 
-            // Refresh the members list
             const membersResponse = await api.get(
                 `/projects/${selectedProject.id}/members`
             );
 
             setMembers(membersResponse.data.members || []);
-
         } catch (error) {
             setMemberError(
                 error.response?.data?.message ||
@@ -333,11 +278,7 @@ const Projects = () => {
         }
     };
 
-
-    // ==============================
     // CLOSE MEMBERS SECTION
-    // ==============================
-
     const handleCloseMembers = () => {
         setSelectedProject(null);
         setMembers([]);
@@ -346,60 +287,75 @@ const Projects = () => {
         setMemberSuccess("");
     };
 
-
-    // ==============================
     // LOADING STATE
-    // ==============================
-
     if (loading) {
         return (
-            <div className="container mt-4">
-                <p>Loading projects...</p>
+            <div className="projects-page">
+                <div className="projects-loading">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                    <p>Loading your projects...</p>
+                </div>
             </div>
         );
     }
 
-
-    // ==============================
     // MAIN UI
-    // ==============================
-
     return (
+        <div className="projects-page">
+            <div className="projects-container">
 
-        <div className="container py-4">
+                {/* PAGE HEADER */}
+                <div className="projects-page-header">
+                    <div>
+                        <span className="projects-eyebrow">WORKSPACE</span>
+                        <h1>My Projects</h1>
+                        <p>Manage your projects and collaborate with your team.</p>
+                    </div>
 
-            <h2 className="mb-4">My Projects</h2>
-
-
-            {/* PROJECT SUCCESS MESSAGE */}
-
-            {success && (
-                <div className="alert alert-success">
-                    {success}
-                </div>
-            )}
-
-
-            {/* PROJECT ERROR MESSAGE */}
-
-            {error && (
-                <div className="alert alert-danger">
-                    {error}
-                </div>
-            )}
-
-
-            {/* PROJECT FORM */}
-
-            <div className="card mb-4">
-
-                <div className="card-header">
-                    <h5 className="mb-0">
-                        {editingId ? "Update Project" : "Create New Project"}
-                    </h5>
+                    <div className="projects-total">
+                        <span className="projects-total-number">
+                            {projects.length}
+                        </span>
+                        <span className="projects-total-label">
+                            {projects.length === 1 ? "Project" : "Projects"}
+                        </span>
+                    </div>
                 </div>
 
-                <div className="card-body">
+                {/* GLOBAL MESSAGES */}
+                {success && (
+                    <div className="alert alert-success projects-alert">
+                        {success}
+                    </div>
+                )}
+
+                {error && (
+                    <div className="alert alert-danger projects-alert">
+                        {error}
+                    </div>
+                )}
+
+                {/* CREATE / UPDATE PROJECT */}
+                <div className="project-form-card">
+                    <div className="project-form-heading">
+                        <div className="project-form-icon">
+                            {editingId ? "✎" : "+"}
+                        </div>
+
+                        <div>
+                            <h5>
+                                {editingId ? "Update project" : "Create a new project"}
+                            </h5>
+                            <p>
+                                {editingId
+                                    ? "Make changes to your existing project."
+                                    : "Give your project a name and a short description."
+                                }
+                            </p>
+                        </div>
+                    </div>
 
                     <form
                         onSubmit={
@@ -408,313 +364,289 @@ const Projects = () => {
                                 : handleCreateProject
                         }
                     >
+                        <div className="row g-3">
+                            <div className="col-lg-5">
+                                <label htmlFor="projectName" className="project-label">
+                                    Project name
+                                </label>
 
-                        <div className="mb-3">
+                                <input
+                                    id="projectName"
+                                    type="text"
+                                    className="form-control project-input"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    placeholder="e.g. Website redesign"
+                                    required
+                                />
+                            </div>
 
-                            <label className="form-label">
-                                Project Name
-                            </label>
+                            <div className="col-lg-7">
+                                <label htmlFor="projectDescription" className="project-label">
+                                    Description
+                                </label>
 
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                placeholder="Enter project name"
-                            />
-
+                                <input
+                                    id="projectDescription"
+                                    type="text"
+                                    className="form-control project-input"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    placeholder="What is this project about?"
+                                />
+                            </div>
                         </div>
 
-
-                        <div className="mb-3">
-
-                            <label className="form-label">
-                                Description
-                            </label>
-
-                            <textarea
-                                className="form-control"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                                placeholder="Enter project description"
-                                rows="3"
-                            />
-
-                        </div>
-
-
-                        <button
-                            type="submit"
-                            className="btn btn-primary"
-                            disabled={creating}
-                        >
-                            {creating
-                                ? "Please wait..."
-                                : editingId
-                                    ? "Update Project"
-                                    : "Create Project"}
-                        </button>
-
-
-                        {editingId && (
+                        <div className="project-form-actions">
                             <button
-                                type="button"
-                                className="btn btn-secondary ms-2"
-                                onClick={handleCancelEdit}
+                                type="submit"
+                                className="btn project-primary-btn"
+                                disabled={creating}
                             >
-                                Cancel
+                                {creating
+                                    ? "Please wait..."
+                                    : editingId
+                                        ? "Save changes"
+                                        : "+ Create project"
+                                }
                             </button>
-                        )}
 
+                            {editingId && (
+                                <button
+                                    type="button"
+                                    className="btn project-cancel-btn"
+                                    onClick={handleCancelEdit}
+                                >
+                                    Cancel
+                                </button>
+                            )}
+                        </div>
                     </form>
-
                 </div>
 
-            </div>
-
-
-            {/* PROJECT LIST */}
-
-            {projects.length === 0 ? (
-
-                <div className="alert alert-info">
-                    No projects found. Create your first project!
+                {/* PROJECT LIST HEADER */}
+                <div className="project-list-heading">
+                    <div>
+                        <h4>Your workspace</h4>
+                        <p>All the projects you have created.</p>
+                    </div>
                 </div>
 
-            ) : (
+                {/* PROJECT LIST */}
+                {projects.length === 0 ? (
+                    <div className="projects-empty-state">
+                        <div className="empty-state-icon">▤</div>
+                        <h5>No projects yet</h5>
+                        <p>Create your first project to get started.</p>
+                    </div>
+                ) : (
+                    <div className="row g-4">
+                        {projects.map((project) => (
+                            <div className="col-md-6 col-xl-4" key={project.id}>
+                                <div className="project-card">
 
-                <div className="row">
+                                    <div className="project-card-top">
+                                        <div className="project-card-icon">
+                                            {project.name?.charAt(0)?.toUpperCase() || "P"}
+                                        </div>
 
-                    {projects.map((project) => (
+                                        <span className="project-status">
+                                            {project.status || "Active"}
+                                        </span>
+                                    </div>
 
-                        <div
-                            className="col-md-4 mb-3"
-                            key={project.id}
-                        >
+                                    <div className="project-card-content">
+                                        <h5>{project.name}</h5>
 
-                            <div className="card h-100">
+                                        <p>
+                                            {project.description ||
+                                                "No description has been added to this project."}
+                                        </p>
+                                    </div>
 
-                                <div className="card-body">
+                                    <div className="project-card-divider"></div>
 
-                                    <h5 className="card-title">
-                                        {project.name}
-                                    </h5>
-
-                                    <p className="card-text">
-                                        {project.description}
-                                    </p>
-
-                                    <span className="badge bg-primary">
-                                        {project.status}
-                                    </span>
-
-
-                                    {/* PROJECT ACTIONS */}
-
-                                    <div className="mt-3">
-
+                                    <div className="project-card-actions">
                                         <button
-                                            className="btn btn-sm btn-warning me-2"
-                                            onClick={() => handleEditProject(project)}
-                                        >
-                                            Edit
-                                        </button>
-
-                                        <button
-                                            className="btn btn-sm btn-danger me-2"
-                                            onClick={() => handleDeleteProject(project.id)}
-                                        >
-                                            Delete
-                                        </button>
-
-                                        <button
-                                            className="btn btn-sm btn-info text-white"
+                                            type="button"
+                                            className="btn project-view-btn"
                                             onClick={() => fetchMembers(project)}
                                         >
-                                            View Members
+                                            View members
                                         </button>
 
+                                        <div className="project-secondary-actions">
+                                            <button
+                                                type="button"
+                                                className="btn project-icon-btn"
+                                                title="Edit project"
+                                                aria-label="Edit project"
+                                                onClick={() => handleEditProject(project)}
+                                            >
+                                                ✎
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                className="btn project-icon-btn project-delete-btn"
+                                                title="Delete project"
+                                                aria-label="Delete project"
+                                                onClick={() => handleDeleteProject(project.id)}
+                                            >
+                                                🗑
+                                            </button>
+                                        </div>
                                     </div>
 
                                 </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
 
+                {/* PROJECT MEMBERS PANEL */}
+                {selectedProject && (
+                    <div className="members-panel" id="project-members">
+
+                        <div className="members-panel-header">
+                            <div>
+                                <span className="projects-eyebrow">TEAM MANAGEMENT</span>
+                                <h4>{selectedProject.name}</h4>
+                                <p>Manage the people working on this project.</p>
                             </div>
 
+                            <button
+                                type="button"
+                                className="btn members-close-btn"
+                                onClick={handleCloseMembers}
+                            >
+                                ✕ <span>Close</span>
+                            </button>
                         </div>
 
-                    ))}
-
-                </div>
-
-            )}
-
-
-            {/* PROJECT MEMBERS SECTION */}
-
-            {selectedProject && (
-
-                <div className="card mt-4">
-
-                    <div className="card-header d-flex justify-content-between align-items-center">
-
-                        <h5 className="mb-0">
-                            Members - {selectedProject.name}
-                        </h5>
-
-                        <button
-                            className="btn btn-sm btn-secondary"
-                            onClick={handleCloseMembers}
-                        >
-                            Close
-                        </button>
-
-                    </div>
-
-
-                    <div className="card-body">
-
-
-                        {/* MEMBER SUCCESS MESSAGE */}
-
                         {memberSuccess && (
-                            <div className="alert alert-success">
+                            <div className="alert alert-success projects-alert">
                                 {memberSuccess}
                             </div>
                         )}
 
-
-                        {/* MEMBER ERROR MESSAGE */}
-
                         {memberError && (
-                            <div className="alert alert-danger">
+                            <div className="alert alert-danger projects-alert">
                                 {memberError}
                             </div>
                         )}
 
-
-                        {/* ADD MEMBER FORM */}
-
-                        <form
-                            onSubmit={handleAddMember}
-                            className="mb-4"
-                        >
-
-                            <label className="form-label">
-                                Add Member by Email
-                            </label>
-
-                            <div className="input-group">
-
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    placeholder="Enter registered user's email"
-                                    value={memberEmail}
-                                    onChange={(e) => setMemberEmail(e.target.value)}
-                                />
-
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                    disabled={addingMember || membersLoading}
-                                >
-                                    {addingMember ? "Adding..." : "Add Member"}
-                                </button>
-
+                        {/* ADD MEMBER */}
+                        <div className="add-member-section">
+                            <div>
+                                <h6>Add a team member</h6>
+                                <p>Enter the email address of an existing TaskFlow user.</p>
                             </div>
 
-                        </form>
+                            <form onSubmit={handleAddMember}>
+                                <div className="input-group">
+                                    <input
+                                        type="email"
+                                        className="form-control project-input"
+                                        placeholder="Enter registered user's email"
+                                        value={memberEmail}
+                                        onChange={(e) => setMemberEmail(e.target.value)}
+                                        required
+                                    />
 
+                                    <button
+                                        type="submit"
+                                        className="btn project-primary-btn"
+                                        disabled={addingMember || membersLoading}
+                                    >
+                                        {addingMember ? "Adding..." : "+ Add member"}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
 
                         {/* MEMBERS LIST */}
-
-                        <h6 className="mb-3">
-                            Current Members
-                        </h6>
-
-
-                        {membersLoading ? (
-
-                            <p>Loading members...</p>
-
-                        ) : members.length === 0 ? (
-
-                            <div className="alert alert-info">
-                                No members have been added to this project yet.
+                        <div className="members-list-section">
+                            <div className="members-list-heading">
+                                <div>
+                                    <h6>Project members</h6>
+                                    <p>
+                                        {members.length} {members.length === 1 ? "member" : "members"} in this project
+                                    </p>
+                                </div>
                             </div>
 
-                        ) : (
-
-                            <div className="table-responsive">
-
-                                <table className="table table-bordered table-hover">
-
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-
-
-                                    <tbody>
-
-                                        {members.map((member) => (
-
-                                            <tr key={member.id}>
-
-                                                <td>
-                                                    {member.User?.name || "N/A"}
-                                                </td>
-
-                                                <td>
-                                                    {member.User?.email || "N/A"}
-                                                </td>
-
-                                                <td>
-                                                    <span className="badge bg-primary">
-                                                        {member.role}
-                                                    </span>
-                                                </td>
-
-                                                <td>
-
-                                                    <button
-                                                        className="btn btn-sm btn-danger"
-                                                        disabled={removingMemberId === member.userId}
-                                                        onClick={() => handleRemoveMember(member.userId)}
-                                                    >
-                                                        {removingMemberId === member.userId
-                                                            ? "Removing..."
-                                                            : "Remove"}
-                                                    </button>
-
-                                                </td>
-
+                            {membersLoading ? (
+                                <div className="members-loading">
+                                    <div className="spinner-border spinner-border-sm text-primary" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                    <span>Loading members...</span>
+                                </div>
+                            ) : members.length === 0 ? (
+                                <div className="members-empty-state">
+                                    <p>No members have been added to this project yet.</p>
+                                    <span>Add someone using the form above.</span>
+                                </div>
+                            ) : (
+                                <div className="table-responsive">
+                                    <table className="table members-table align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th>Member</th>
+                                                <th>Email address</th>
+                                                <th>Role</th>
+                                                <th className="text-end">Action</th>
                                             </tr>
+                                        </thead>
 
-                                        ))}
+                                        <tbody>
+                                            {members.map((member) => (
+                                                <tr key={member.id}>
+                                                    <td>
+                                                        <div className="member-name-cell">
+                                                            <div className="member-avatar">
+                                                                {member.User?.name?.charAt(0)?.toUpperCase() || "U"}
+                                                            </div>
+                                                            <span>{member.User?.name || "N/A"}</span>
+                                                        </div>
+                                                    </td>
 
-                                    </tbody>
+                                                    <td>{member.User?.email || "N/A"}</td>
 
-                                </table>
+                                                    <td>
+                                                        <span className="member-role">
+                                                            {member.role}
+                                                        </span>
+                                                    </td>
 
-                            </div>
-
-                        )}
+                                                    <td className="text-end">
+                                                        <button
+                                                            type="button"
+                                                            className="btn member-remove-btn"
+                                                            disabled={removingMemberId === member.userId}
+                                                            onClick={() => handleRemoveMember(member.userId)}
+                                                        >
+                                                            {removingMemberId === member.userId
+                                                                ? "Removing..."
+                                                                : "Remove"
+                                                            }
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+                        </div>
 
                     </div>
+                )}
 
-                </div>
-
-            )}
-
+            </div>
         </div>
-
     );
-
 };
 
 export default Projects;

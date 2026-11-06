@@ -8,6 +8,18 @@ redisClient.on("error",(err)=>{
     console.log("Redis Client Error",err)
 })
 
+redisClient.on("connect",()=>{
+    console.log("Connecting to redis...")
+})
+
+redisClient.on("ready",()=>{
+    console.log("Redis is ready to use")
+})
+
+redisClient.on("reconnecting",()=>{
+    console.log("Redis reconnecting...")
+})
+
 const connectRedis = async () =>{
     try{
         await redisClient.connect();

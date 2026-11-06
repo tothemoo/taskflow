@@ -1,0 +1,706 @@
+
+/* ==============================
+   PAGE LAYOUT
+============================== */
+
+.projects-page {
+    min-height: 100vh;
+    background: #f8fafc;
+    padding: 42px 24px 60px;
+    color: #111827;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.projects-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.projects-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.projects-eyebrow {
+    display: block;
+    color: #6366f1;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 9px;
+}
+
+.projects-page-header h1 {
+    font-size: 32px;
+    font-weight: 750;
+    letter-spacing: -1px;
+    margin: 0 0 8px;
+}
+
+.projects-page-header p {
+    color: #6b7280;
+    font-size: 14px;
+    margin: 0;
+}
+
+.projects-total {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 85px;
+    height: 85px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.projects-total-number {
+    font-size: 26px;
+    font-weight: 750;
+    color: #4f46e5;
+}
+
+.projects-total-label {
+    color: #6b7280;
+    font-size: 11px;
+}
+
+/* ==============================
+   LOADING
+============================== */
+
+.projects-loading {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.projects-loading p {
+    margin: 0;
+}
+
+/* ==============================
+   ALERTS
+============================== */
+
+.projects-alert {
+    border-radius: 9px;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+/* ==============================
+   PROJECT FORM
+============================== */
+
+.project-form-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 13px;
+    padding: 25px;
+    margin-bottom: 42px;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.025);
+}
+
+.project-form-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.project-form-icon {
+    width: 43px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.project-form-heading h5 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 5px;
+}
+
+.project-form-heading p {
+    color: #9ca3af;
+    font-size: 12px;
+    margin: 0;
+}
+
+.project-label {
+    display: block;
+    color: #374151;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.project-input {
+    min-height: 45px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px !important;
+    padding: 10px 13px;
+    font-size: 13px;
+    color: #111827;
+    background: #ffffff;
+}
+
+.project-input::placeholder {
+    color: #9ca3af;
+}
+
+.project-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.10);
+}
+
+.project-form-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.project-primary-btn {
+    min-height: 42px;
+    padding: 9px 18px;
+    background: #4f46e5;
+    border: 1px solid #4f46e5;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.project-primary-btn:hover {
+    background: #4338ca;
+    border-color: #4338ca;
+    color: #ffffff;
+}
+
+.project-primary-btn:disabled {
+    background: #818cf8;
+    border-color: #818cf8;
+    color: #ffffff;
+}
+
+.project-cancel-btn {
+    min-height: 42px;
+    padding: 9px 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    color: #4b5563;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.project-cancel-btn:hover {
+    background: #f3f4f6;
+}
+
+/* ==============================
+   PROJECT LIST HEADER
+============================== */
+
+.project-list-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 19px;
+}
+
+.project-list-heading h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 5px;
+}
+
+.project-list-heading p {
+    font-size: 12px;
+    color: #9ca3af;
+    margin: 0;
+}
+
+/* ==============================
+   PROJECT CARDS
+============================== */
+
+.project-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 13px;
+    padding: 21px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+}
+
+.project-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.project-card-icon {
+    width: 43px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.project-status {
+    padding: 5px 10px;
+    background: #ecfdf5;
+    color: #047857;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.project-card-content {
+    flex: 1;
+}
+
+.project-card-content h5 {
+    color: #111827;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 9px;
+    word-break: break-word;
+}
+
+.project-card-content p {
+    color: #6b7280;
+    font-size: 12px;
+    line-height: 1.7;
+    margin: 0;
+    min-height: 42px;
+    overflow-wrap: anywhere;
+}
+
+.project-card-divider {
+    height: 1px;
+    background: #f1f5f9;
+    margin: 20px 0 15px;
+}
+
+.project-card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.project-view-btn {
+    background: #eef2ff;
+    color: #4f46e5;
+    border: none;
+    border-radius: 7px;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.project-view-btn:hover {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+.project-secondary-actions {
+    display: flex;
+    gap: 7px;
+}
+
+.project-icon-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+    color: #4b5563;
+    font-size: 15px;
+}
+
+.project-icon-btn:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.project-delete-btn:hover {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #dc2626;
+}
+
+/* ==============================
+   EMPTY PROJECT STATE
+============================== */
+
+.projects-empty-state {
+    padding: 55px 20px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px dashed #d1d5db;
+    border-radius: 13px;
+}
+
+.empty-state-icon {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    background: #eef2ff;
+    color: #4f46e5;
+    border-radius: 14px;
+    font-size: 25px;
+}
+
+.projects-empty-state h5 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.projects-empty-state p {
+    color: #9ca3af;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* ==============================
+   MEMBERS PANEL
+============================== */
+
+.members-panel {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 13px;
+    margin-top: 42px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.025);
+}
+
+.members-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.members-panel-header h4 {
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0 0 6px;
+}
+
+.members-panel-header p {
+    color: #9ca3af;
+    font-size: 12px;
+    margin: 0;
+}
+
+.members-close-btn {
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+    color: #6b7280;
+    font-size: 12px;
+    padding: 8px 12px;
+}
+
+.members-close-btn:hover {
+    background: #f9fafb;
+    color: #111827;
+}
+
+/* ==============================
+   ADD MEMBER
+============================== */
+
+.add-member-section {
+    padding: 23px 25px;
+    background: #fafbff;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.add-member-section h6 {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 5px;
+}
+
+.add-member-section p {
+    color: #9ca3af;
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+.add-member-section .input-group {
+    max-width: 650px;
+}
+
+.add-member-section .project-input {
+    min-width: 0;
+}
+
+/* ==============================
+   MEMBERS TABLE
+============================== */
+
+.members-list-section {
+    padding: 25px;
+}
+
+.members-list-heading {
+    margin-bottom: 17px;
+}
+
+.members-list-heading h6 {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 5px;
+}
+
+.members-list-heading p {
+    color: #9ca3af;
+    font-size: 11px;
+    margin: 0;
+}
+
+.members-table {
+    margin-bottom: 0;
+    font-size: 12px;
+}
+
+.members-table thead th {
+    background: #f9fafb;
+    color: #6b7280;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 13px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.members-table tbody td {
+    color: #4b5563;
+    padding: 13px 12px;
+    border-color: #f1f5f9;
+    vertical-align: middle;
+}
+
+.member-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #111827;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.member-avatar {
+    width: 33px;
+    height: 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef2ff;
+    color: #4f46e5;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.member-role {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #f3f4f6;
+    color: #4b5563;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.member-remove-btn {
+    background: #fff1f2;
+    color: #e11d48;
+    border: 1px solid #ffe4e6;
+    border-radius: 6px;
+    padding: 6px 11px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.member-remove-btn:hover {
+    background: #ffe4e6;
+    color: #be123c;
+}
+
+.member-remove-btn:disabled {
+    opacity: 0.6;
+}
+
+/* ==============================
+   MEMBER EMPTY / LOADING STATES
+============================== */
+
+.members-empty-state {
+    padding: 35px 15px;
+    text-align: center;
+    background: #fafbff;
+    border: 1px dashed #e5e7eb;
+    border-radius: 9px;
+}
+
+.members-empty-state p {
+    color: #4b5563;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.members-empty-state span {
+    color: #9ca3af;
+    font-size: 11px;
+}
+
+.members-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 30px;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+/* ==============================
+   RESPONSIVE DESIGN
+============================== */
+
+@media (max-width: 768px) {
+    .projects-page {
+        padding: 28px 16px 45px;
+    }
+
+    .projects-page-header {
+        align-items: flex-start;
+    }
+
+    .projects-page-header h1 {
+        font-size: 26px;
+    }
+
+    .projects-total {
+        width: 70px;
+        height: 70px;
+    }
+
+    .projects-total-number {
+        font-size: 22px;
+    }
+
+    .project-form-card {
+        padding: 19px;
+    }
+
+    .members-panel-header {
+        padding: 20px;
+    }
+
+    .add-member-section,
+    .members-list-section {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .projects-page-header {
+        gap: 12px;
+    }
+
+    .projects-page-header p {
+        max-width: 230px;
+        line-height: 1.6;
+    }
+
+    .projects-total {
+        flex-shrink: 0;
+    }
+
+    .project-form-heading {
+        align-items: flex-start;
+    }
+
+    .project-form-actions {
+        flex-wrap: wrap;
+    }
+
+    .add-member-section .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .add-member-section .input-group .form-control {
+        width: 100%;
+        border-radius: 8px !important;
+    }
+
+    .add-member-section .input-group .btn {
+        width: 100%;
+        border-radius: 8px !important;
+    }
+
+    .members-panel-header {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .members-close-btn span {
+        display: none;
+    }
+
+    .members-list-section {
+        padding: 16px;
+    }
+}
